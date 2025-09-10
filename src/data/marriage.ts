@@ -24,7 +24,7 @@ const tuple =
 (...args: T) =>
     args
 
-const data = parse(csv, { skipFirstRow: true, })
+const raw = parse(csv, { skipFirstRow: true, })
     .map(x => ({
         gender: x.Entity as string,
         age: Number(x.Year),
@@ -34,12 +34,6 @@ const data = parse(csv, { skipFirstRow: true, })
             .toObject()
     }))
 
-const data1900 = data
+export const data = raw
     .filter(({ gender }) => gender == "Women")
     .map(({ age, married }) => tuple(age, married["1900"]))
-
-import { fit } from "./src/fit.ts"
-
-console.log(
-    (await fit(data1900)).map(x => x.toFixed(2))
-)
