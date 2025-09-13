@@ -36,4 +36,4 @@ const raw = parse(csv, { skipFirstRow: true, })
 
 export const data = raw
     .filter(({ gender }) => gender == "Women")
-    .map(({ age, married }) => tuple(age, married["1900"]))
+    .map(({ age, married }) => tuple(age, married["1900"]/100))

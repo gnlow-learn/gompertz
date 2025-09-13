@@ -9,12 +9,12 @@ await pyodide.runPythonAsync(`
     import numpy as np
     from scipy.optimize import curve_fit
 
-    def gompertz(t, a, b, c, offset):
-        return a*np.exp(-b*np.exp(-c*(t-offset)))
+    def gompertz_cdf(t, a, b, max, offset):
+        return max*(1-np.exp(-a/b*np.expm1((t-offset)*b)))
     
-    def fit(x_data, y_data, initial_guess=[70, 1, 0.1, 0]):
+    def fit(x_data, y_data, initial_guess=[0.05, 0.1, 1, 15]):
         popt, _ = curve_fit(
-            gompertz,
+            gompertz_cdf,
             np.array(x_data),
             np.array(y_data),
             p0=initial_guess,
